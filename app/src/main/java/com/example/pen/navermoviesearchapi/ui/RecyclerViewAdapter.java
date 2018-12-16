@@ -2,6 +2,7 @@ package com.example.pen.navermoviesearchapi.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -23,6 +24,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     List<MovieVO> movieList = new ArrayList<>();
 
+    private static Typeface mTypeface;
+    Context context;
+
+    public RecyclerViewAdapter(Context context) {
+        this.context = context;
+    }
+
     public void addList(List<MovieVO> newList){
         movieList.clear();
 
@@ -37,6 +45,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_movie,parent,false);
+
+        //폰트 변경
+        if(mTypeface == null) {
+            mTypeface = Typeface.createFromAsset(context.getAssets(),
+                    "fonts/BMHANNA_ttf.ttf");
+        }
+        setGlobalFont(view);
+
         return new MovieViewHolder(view);
     }
 
@@ -46,9 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         MovieVO currMovieVO = movieList.get(position);
         movieViewHolder.tvTitle.setText(Html.fromHtml(currMovieVO.getTitle()));
-        movieViewHolder.ratingBar.setRating(currMovieVO.getUserRating());
-        Log.d("test","userRating : " +currMovieVO.getUserRating());
-        Log.d("test","userRating2 : " +movieViewHolder.ratingBar.getNumStars());
+        movieViewHolder.ratingBar.setRating(currMovieVO.getUserRating()/2);
         movieViewHolder.tvPublishYear.setText(currMovieVO.getPubDate());
         movieViewHolder.tvDirector.setText(currMovieVO.getDirector());
         movieViewHolder.tvActors.setText(currMovieVO.getActor());
@@ -97,6 +111,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             tvActors = itemView.findViewById(R.id.tvActors);
             iv = itemView.findViewById(R.id.imageView);
 
+        }
+    }
+
+    //폰트 변경
+    private void setGlobalFont(View view){
+        if(view != null){
+            if(view instanceof ViewGroup){
+                ViewGroup vg = (ViewGroup) view;
+                int vgCnt = vg.getChildCount();
+
+                for(int i = 0; i<vgCnt ; i++){
+                    View v = vg.getChildAt(i);
+                    if(v instanceof TextView){
+                        ((TextView)v).setTypeface(mTypeface);
+                    }
+                    setGlobalFont(v);
+                }
+            }
         }
     }
 }

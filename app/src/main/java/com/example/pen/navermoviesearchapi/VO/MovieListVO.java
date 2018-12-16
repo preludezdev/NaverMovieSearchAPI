@@ -4,12 +4,12 @@ import java.util.List;
 
 public class MovieListVO {
     private String lastBuildDate;
-    private String total;
-    private String start;
-    private String display;
+    private int total;
+    private int start;
+    private int display;
     private List<MovieVO> items;
 
-    public MovieListVO(String lastBuildDate, String total, String start, String display, List<MovieVO> items) {
+    public MovieListVO(String lastBuildDate, int total, int start, int display, List<MovieVO> items) {
         this.lastBuildDate = lastBuildDate;
         this.total = total;
         this.start = start;
@@ -25,27 +25,27 @@ public class MovieListVO {
         this.lastBuildDate = lastBuildDate;
     }
 
-    public String getTotal() {
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(int total) {
         this.total = total;
     }
 
-    public String getStart() {
+    public int getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(int start) {
         this.start = start;
     }
 
-    public String getDisplay() {
+    public int getDisplay() {
         return display;
     }
 
-    public void setDisplay(String display) {
+    public void setDisplay(int display) {
         this.display = display;
     }
 

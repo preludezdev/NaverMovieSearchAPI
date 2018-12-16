@@ -12,5 +12,6 @@ public interface movieAPIService {
     @GET("v1/search/movie.json")
     Call<MovieListVO> getMovieListByName(@Header("X-Naver-Client-Id") String id,
                                          @Header("X-Naver-Client-Secret") String secret,
-                                         @Query("query") String movieName);
+                                         @Query("query") String movieName,
+                                         @Query("display") int movieDisplay);
 }
