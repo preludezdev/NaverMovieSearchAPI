@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,11 +56,17 @@ public class MainActivity extends AppCompatActivity {
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        //키보드 감추기
+        final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
         //클릭 이벤트 구현
         btEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userInput = editText.getText().toString();
+                //검색버튼을 누르면 키보드를 감춘다.
+                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
+                String userInput = editText.getText().toString(); // 사용자 입력값
 
                 NetworkHelper.getInstance()
                         .movieAPIService

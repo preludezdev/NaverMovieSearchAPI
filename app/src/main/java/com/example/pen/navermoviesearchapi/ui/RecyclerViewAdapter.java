@@ -1,5 +1,7 @@
 package com.example.pen.navermoviesearchapi.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -39,8 +41,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        MovieViewHolder movieViewHolder = (MovieViewHolder) holder;
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        final MovieViewHolder movieViewHolder = (MovieViewHolder) holder;
 
         MovieVO currMovieVO = movieList.get(position);
         movieViewHolder.tvTitle.setText(Html.fromHtml(currMovieVO.getTitle()));
@@ -52,13 +54,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         movieViewHolder.tvActors.setText(currMovieVO.getActor());
 
         //이미지 처리
-        //glide 이용
-        //iv = ...
-        //imgURL 설정
         Glide
                 .with(holder.itemView)  //루트뷰인 itemView를 넣어준다
                 .load(currMovieVO.getImage())
                 .into(movieViewHolder.iv);
+
+        //아이템 클릭시 해당 링크로 이동
+        //DetailActivity로 링크를 넘겨준다
+        movieViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String urlLink = movieList.get(position).getLink();
+                Context context = movieViewHolder.itemView.getContext();
+                Intent intent = new Intent(movieViewHolder.itemView.getContext(),DetailActivity.class);
+                intent.putExtra("link",urlLink);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
