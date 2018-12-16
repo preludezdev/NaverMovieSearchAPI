@@ -34,7 +34,6 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String url = intent.getStringExtra("link");
-        Log.d("test",url);
         binding.webView.loadUrl(url);
 
         //백버튼 이벤트 처리

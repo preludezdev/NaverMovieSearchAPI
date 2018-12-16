@@ -57,7 +57,6 @@
             android:ems="10"
             android:hint="검색어를 입력하세요"
             android:inputType="textPersonName"
-            android:text="엑스맨"
             app:layout_constraintEnd_toStartOf="@+id/btEnter"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"

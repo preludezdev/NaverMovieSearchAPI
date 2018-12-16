@@ -27,16 +27,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static Typeface mTypeface;
     Context context;
-    ItemMovieBinding binding;
 
     public RecyclerViewAdapter(Context context) {
         this.context = context;
     }
 
+    public void clearList(){
+        movieList.clear();
+    }
+
     public void addList(List<MovieVO> newList){
         if (newList == null) return;
 
-        movieList.clear();
         for(MovieVO movieVO : newList){
             movieList.add(movieVO);
         }
@@ -95,7 +97,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder{
-
         ItemMovieBinding binding;
 
         public MovieViewHolder(ItemMovieBinding binding) {
