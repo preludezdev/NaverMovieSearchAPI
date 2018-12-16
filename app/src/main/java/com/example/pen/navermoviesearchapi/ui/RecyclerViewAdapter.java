@@ -16,24 +16,27 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.pen.navermoviesearchapi.R;
 import com.example.pen.navermoviesearchapi.VO.MovieVO;
+import com.example.pen.navermoviesearchapi.databinding.ItemMovieBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MovieViewHolder>{
 
     List<MovieVO> movieList = new ArrayList<>();
 
     private static Typeface mTypeface;
     Context context;
+    ItemMovieBinding binding;
 
     public RecyclerViewAdapter(Context context) {
         this.context = context;
     }
 
     public void addList(List<MovieVO> newList){
-        movieList.clear();
+        if (newList == null) return;
 
+        movieList.clear();
         for(MovieVO movieVO : newList){
             movieList.add(movieVO);
         }
@@ -42,36 +45,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.item_movie,parent,false);
+        ItemMovieBinding binding = ItemMovieBinding.inflate(inflater, parent, false);
 
         //폰트 변경
         if(mTypeface == null) {
             mTypeface = Typeface.createFromAsset(context.getAssets(),
                     "fonts/BMHANNA_ttf.ttf");
         }
-        setGlobalFont(view);
+        setGlobalFont(binding.getRoot());
 
-        return new MovieViewHolder(view);
+        return new MovieViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(MovieViewHolder holder, final int position) {
         final MovieViewHolder movieViewHolder = (MovieViewHolder) holder;
 
         MovieVO currMovieVO = movieList.get(position);
-        movieViewHolder.tvTitle.setText(Html.fromHtml(currMovieVO.getTitle()));
-        movieViewHolder.ratingBar.setRating(currMovieVO.getUserRating()/2);
-        movieViewHolder.tvPublishYear.setText(currMovieVO.getPubDate());
-        movieViewHolder.tvDirector.setText(currMovieVO.getDirector());
-        movieViewHolder.tvActors.setText(currMovieVO.getActor());
+
+        //데이터 바인딩
+        holder.binding.setMovie(currMovieVO);
+        holder.binding.tvTitle.setText(Html.fromHtml(currMovieVO.getTitle()));
 
         //이미지 처리
         Glide
                 .with(holder.itemView)  //루트뷰인 itemView를 넣어준다
                 .load(currMovieVO.getImage())
-                .into(movieViewHolder.iv);
+                .into(holder.binding.imageView);
 
         //아이템 클릭시 해당 링크로 이동
         //DetailActivity로 링크를 넘겨준다
@@ -93,24 +95,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder{
-        TextView tvTitle;
-        RatingBar ratingBar;
-        TextView tvPublishYear;
-        TextView tvDirector;
-        TextView tvActors;
-        ImageView iv;
 
+        ItemMovieBinding binding;
 
-        public MovieViewHolder(View itemView) {
-            super(itemView);
-
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            ratingBar = itemView.findViewById(R.id.ratingBar);
-            tvPublishYear = itemView.findViewById(R.id.tvPublishYear);
-            tvDirector = itemView.findViewById(R.id.tvDirector);
-            tvActors = itemView.findViewById(R.id.tvActors);
-            iv = itemView.findViewById(R.id.imageView);
-
+        public MovieViewHolder(ItemMovieBinding binding) {
+            //super(itemView);
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
