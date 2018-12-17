@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity {
                                     //검색에 성공하면 키보드를 감춘다
                                     imm.hideSoftInputFromWindow(binding.etText.getWindowToken(), 0);
 
-                                    //출력된 데이터 리사이클러뷰에 뿌리기.
+                                    //출력된 데이터 리사이클러뷰에 뿌리기
                                     MovieListVO movieListVO = response.body();
                                     recyclerViewAdapter.clearList();
                                     recyclerViewAdapter.addList(movieListVO.getItems());
