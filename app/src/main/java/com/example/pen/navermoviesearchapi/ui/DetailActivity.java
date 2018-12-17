@@ -14,7 +14,7 @@ import android.widget.ImageButton;
 import com.example.pen.navermoviesearchapi.R;
 import com.example.pen.navermoviesearchapi.databinding.ActivityDetailBinding;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends BaseActivity {
 
     WebSettings webSettings;
 
