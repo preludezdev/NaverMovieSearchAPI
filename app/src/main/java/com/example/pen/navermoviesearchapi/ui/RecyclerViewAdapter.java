@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -75,6 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Glide
                 .with(holder.itemView)  //루트뷰인 itemView를 넣어준다
                 .load(currMovieVO.getImage())
+                .error(Glide.with(holder.itemView).load(R.drawable.image_not_found)) //로딩에러 처리
                 .into(holder.binding.imageView);
 
         //아이템 클릭시 해당 링크로 이동
