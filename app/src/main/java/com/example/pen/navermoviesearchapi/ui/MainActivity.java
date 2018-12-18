@@ -23,7 +23,6 @@ public class MainActivity extends BaseActivity {
     private String clientSecret = "regEDQ1Wxd";
 
     ActivityMainBinding binding;
-
     RecyclerViewAdapter recyclerViewAdapter;
 
     @Override
